@@ -84,7 +84,27 @@ namespace TowerOfHanoi
             int spacing = diskCount > 0 ? diskCount.ToString().Length : 0;
             int maxHeight = Math.Max(Math.Max(towers[0].Count, towers[1].Count), Math.Max(towers[1].Count, towers[2].Count)); // This works only for 3 towers
 
-            Console.WriteLine(new string('-', 3 * spacing + 10));
+            string topLine = "";
+            topLine += "┌";
+
+            for (int i = 0; i < 3 * spacing + 8; i++)
+            {
+                bool isIntersection = (i + 1) % (spacing + 3) == 0;
+                if (isIntersection)
+                {
+                    topLine += "┬";
+                }
+                else
+                {
+                    topLine += "─";
+                }
+            }
+
+            topLine += "┐";
+
+            // ┬
+
+            Console.WriteLine(topLine);
             for (int i = maxHeight - 1; i >= 0; i--)
             {
                 string line = "";
@@ -95,11 +115,30 @@ namespace TowerOfHanoi
                     int value = 0;
                     if (i < tower.Count) value = tower[i];
 
-                    line += "| " + ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
+                    line += "│ " + ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
                 }
-                Console.WriteLine(line + "|");
+                Console.WriteLine(line + "│");
             }
-            Console.WriteLine(new string('-', 3 * spacing + 10));
+
+            string bottomLine = "";
+            bottomLine += "└";
+
+            for (int i = 0; i < 3 * spacing + 8; i++)
+            {
+                bool isIntersection = (i + 1) % (spacing + 3) == 0;
+                if (isIntersection)
+                {
+                    bottomLine += "┴";
+                }
+                else
+                {
+                    bottomLine += "─";
+                }
+            }
+
+            bottomLine += "┘";
+
+            Console.WriteLine(bottomLine);
         }
 
         public int GetBestPossibleMoveCount()
