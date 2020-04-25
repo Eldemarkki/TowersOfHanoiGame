@@ -11,12 +11,12 @@ namespace TowerOfHanoi
         private List<int>[] towers;
         private int diskCount;
 
-        private Queue<(int, int)> moveHistory;
+        private Stack<(int, int)> moveHistory;
 
         public TowerOfHanoiGame(int diskCount)
         {
             towers = new List<int>[towerCount];
-            moveHistory = new Queue<(int, int)>();
+            moveHistory = new Stack<(int, int)>();
 
             this.diskCount = diskCount;
 
@@ -47,8 +47,8 @@ namespace TowerOfHanoi
 
             if (sourceTowerTopMost < targetTowerTopMost)
             {
-                if(addToHistory) moveHistory.Enqueue((sourceTowerIndex, targetTowerIndex));
-                
+                if (addToHistory) moveHistory.Push((sourceTowerIndex, targetTowerIndex));
+
                 sourceTower.RemoveAt(sourceTower.Count - 1);
                 targetTower.Add(sourceTowerTopMost);
                 Print();
@@ -63,7 +63,7 @@ namespace TowerOfHanoi
         {
             if (moveHistory.Count == 0) return false;
 
-            (int, int) move = moveHistory.Dequeue();
+            (int, int) move = moveHistory.Pop();
             Move(move.Item2, move.Item1, false);
             return true;
         }
@@ -84,8 +84,7 @@ namespace TowerOfHanoi
             int spacing = diskCount > 0 ? diskCount.ToString().Length : 0;
             int maxHeight = Math.Max(Math.Max(towers[0].Count, towers[1].Count), Math.Max(towers[1].Count, towers[2].Count)); // This works only for 3 towers
 
-            Console.WriteLine("");
-
+            Console.WriteLine(new string('-', 3 * spacing + 10));
             for (int i = maxHeight - 1; i >= 0; i--)
             {
                 string line = "";
@@ -96,10 +95,11 @@ namespace TowerOfHanoi
                     int value = 0;
                     if (i < tower.Count) value = tower[i];
 
-                    line += ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
+                    line += "| " + ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
                 }
-                Console.WriteLine(line);
+                Console.WriteLine(line + "|");
             }
+            Console.WriteLine(new string('-', 3 * spacing + 10));
         }
 
         private string ReplaceUntilDifferentCharacter(string text, char charToReplace, char replaceWith)
