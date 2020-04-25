@@ -102,6 +102,16 @@ namespace TowerOfHanoi
             Console.WriteLine(new string('-', 3 * spacing + 10));
         }
 
+        public int GetBestPossibleMoveCount()
+        {
+            return (int)Math.Pow(2, diskCount) - 1;
+        }
+
+        public int GetMoveCount()
+        {
+            return moveHistory.Count;
+        }
+
         private string ReplaceUntilDifferentCharacter(string text, char charToReplace, char replaceWith)
         {
             var result = text.ToCharArray();
