@@ -16,7 +16,7 @@ namespace TowerOfHanoi
             while (true)
             {
                 Console.Write("> ");
-                string[] commandArgs = Console.ReadLine().Split(' ');
+                string[] commandArgs = Console.ReadLine().Trim().Split(' ');
                 string command = commandArgs[0].ToLower().Trim();
 
                 if (command == "move")
@@ -62,7 +62,7 @@ namespace TowerOfHanoi
                     bool isOver = game.IsOver();
                     if (isOver)
                     {
-                        Console.WriteLine("Game over! You moved all the disks correctly!");
+                        Console.WriteLine("Game over! You moved all the disks successfully!");
                         break;
                     }
                 }
