@@ -18,7 +18,7 @@ namespace TowerOfHanoi.Printers
             for (int i = maxHeight - 1; i >= 0; i--)
             {
                 string line = "";
-                for (int j = 0; j < TowerOfHanoiGame.TowerCount; j++)
+                for (int j = 0; j < game.TowerCount; j++)
                 {
                     List<int> tower = game.GetTower(j);
 

@@ -7,8 +7,6 @@ namespace TowerOfHanoi
 {
     public class TowerOfHanoiGame
     {
-        private const int towerCount = 3;
-
         private List<int>[] towers;
         private Stack<(int, int)> moveHistory;
 
@@ -16,14 +14,23 @@ namespace TowerOfHanoi
         private PrintStyleSettings printStyleSettings;
 
         public int DiskCount { get; }
-        public static int TowerCount => towerCount;
+        public int TowerCount { get; }
 
-        public TowerOfHanoiGame(int diskCount)
+        public TowerOfHanoiGame(int diskCount) : this(diskCount, 3) { }
+
+        public TowerOfHanoiGame(int diskCount, int towerCount)
         {
-            printer = new PipeGamePrinter();
+            if (towerCount < 3)
+            {
+                Console.WriteLine("WARNING: Tower count can not be less than 3! Setting tower count to 3.");
+                towerCount = 3;
+            }
+
+            printer = new LineGamePrinter();
             printStyleSettings = new PrintStyleSettings(1, 0);
 
             towers = new List<int>[towerCount];
+            TowerCount = towerCount;
             moveHistory = new Stack<(int, int)>();
 
             DiskCount = diskCount;
@@ -94,17 +101,46 @@ namespace TowerOfHanoi
 
         public void Print()
         {
-            printer.Print(this, printStyleSettings);            
-        }
-
-        public int GetBestPossibleMoveCount()
-        {
-            return (int)Math.Pow(2, DiskCount) - 1;
-        }
+            printer.Print(this, printStyleSettings);
+        }        
 
         public int GetMoveCount()
         {
             return moveHistory.Count;
+        }
+
+        public int GetMinimumMoves()
+        {
+            return CalculateMinimumMoves(TowerCount, DiskCount);
+        }
+
+        // Copied and modified from: https://stackoverflow.com/questions/46435617/tower-of-hanoi-frame-stewart-k-pegs-in-c
+        private int CalculateMinimumMoves(int rods, int disks)
+        {
+            if (disks == 0) return 0;
+            if (disks == 1) return 1;
+            if (rods == 3) return (int)Math.Pow(2, disks) - 1;
+            if (rods >= 3 && disks > 0)
+            {
+                int[] potentialMoves = new int[disks - 1];
+                for (int i = 1; i < disks; i++)
+                {
+                    potentialMoves[i - 1] = 2 * CalculateMinimumMoves(rods, i) + CalculateMinimumMoves(rods - 1, disks - i);
+                }
+
+                int min = potentialMoves[0];
+                for (int i = 1; i < disks - 1; i++)
+                {
+                    if (potentialMoves[i] < min)
+                    {
+                        min = potentialMoves[i];
+                    }
+                }
+
+                return min;
+            }
+
+            return int.MaxValue;
         }
     }
 }

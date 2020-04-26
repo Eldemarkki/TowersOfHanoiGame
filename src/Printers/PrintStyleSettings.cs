@@ -10,6 +10,5 @@
             HorizontalPadding = horizontalPadding;
             VerticalPadding = verticalPadding;
         }
-
     }
 }

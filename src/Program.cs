@@ -14,8 +14,7 @@ namespace TowerOfHanoi
 
             Console.Write("How many disks do you want to play with? ");
 
-            int diskCount = 0;
-
+            int diskCount;
             while (!int.TryParse(Console.ReadLine(), out diskCount))
             {
                 Console.Write("That's not a valid number! How many disks do you want to play with? ");
@@ -52,15 +51,15 @@ namespace TowerOfHanoi
                         continue;
                     }
 
-                    if (fromIndex < 1 || fromIndex > TowerOfHanoiGame.TowerCount)
+                    if (fromIndex < 1 || fromIndex > game.TowerCount)
                     {
-                        Console.WriteLine($"The first argument must be between 1 and {TowerOfHanoiGame.TowerCount}!");
+                        Console.WriteLine($"The first argument must be between 1 and {game.TowerCount}!");
                         continue;
                     }
 
-                    if (toIndex < 1 || toIndex > TowerOfHanoiGame.TowerCount)
+                    if (toIndex < 1 || toIndex > game.TowerCount)
                     {
-                        Console.WriteLine($"The second argument must be between 1 and {TowerOfHanoiGame.TowerCount}!");
+                        Console.WriteLine($"The second argument must be between 1 and {game.TowerCount}!");
                         continue;
                     }
 
@@ -74,7 +73,7 @@ namespace TowerOfHanoi
                     if (isOver)
                     {
                         int moveCount = game.GetMoveCount();
-                        int bestPossible = game.GetBestPossibleMoveCount();
+                        int bestPossible = game.GetMinimumMoves();
                         if (moveCount == bestPossible)
                         {
                             Console.WriteLine($"Game over! You moved all the disks successfully in the best possible way ({bestPossible} moves)!");
