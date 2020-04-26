@@ -13,8 +13,15 @@ namespace TowerOfHanoi
 
         private Stack<(int, int)> moveHistory;
 
+        private ITowerOfHanoiPrinter printer;
+
+        public int DiskCount => diskCount;
+        public static int TowerCount => towerCount;
+
         public TowerOfHanoiGame(int diskCount)
         {
+            printer = new PipeGamePrinter();
+
             towers = new List<int>[towerCount];
             moveHistory = new Stack<(int, int)>();
 
@@ -81,64 +88,7 @@ namespace TowerOfHanoi
 
         public void Print()
         {
-            int spacing = diskCount > 0 ? diskCount.ToString().Length : 0;
-            int maxHeight = Math.Max(Math.Max(towers[0].Count, towers[1].Count), Math.Max(towers[1].Count, towers[2].Count)); // This works only for 3 towers
-
-            string topLine = "";
-            topLine += "┌";
-
-            for (int i = 0; i < 3 * spacing + 8; i++)
-            {
-                bool isIntersection = (i + 1) % (spacing + 3) == 0;
-                if (isIntersection)
-                {
-                    topLine += "┬";
-                }
-                else
-                {
-                    topLine += "─";
-                }
-            }
-
-            topLine += "┐";
-
-            // ┬
-
-            Console.WriteLine(topLine);
-            for (int i = maxHeight - 1; i >= 0; i--)
-            {
-                string line = "";
-                for (int j = 0; j < towerCount; j++)
-                {
-                    List<int> tower = towers[j];
-
-                    int value = 0;
-                    if (i < tower.Count) value = tower[i];
-
-                    line += "│ " + ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
-                }
-                Console.WriteLine(line + "│");
-            }
-
-            string bottomLine = "";
-            bottomLine += "└";
-
-            for (int i = 0; i < 3 * spacing + 8; i++)
-            {
-                bool isIntersection = (i + 1) % (spacing + 3) == 0;
-                if (isIntersection)
-                {
-                    bottomLine += "┴";
-                }
-                else
-                {
-                    bottomLine += "─";
-                }
-            }
-
-            bottomLine += "┘";
-
-            Console.WriteLine(bottomLine);
+            printer.Print(this);            
         }
 
         public int GetBestPossibleMoveCount()
@@ -149,25 +99,6 @@ namespace TowerOfHanoi
         public int GetMoveCount()
         {
             return moveHistory.Count;
-        }
-
-        private string ReplaceUntilDifferentCharacter(string text, char charToReplace, char replaceWith)
-        {
-            var result = text.ToCharArray();
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                if (result[i] == charToReplace)
-                {
-                    result[i] = replaceWith;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return new string(result);
         }
     }
 }
