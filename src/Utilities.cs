@@ -14,5 +14,10 @@ namespace TowerOfHanoi.Utilities
 
             return sb.ToString();
         }
+
+        public static string Repeat(this char character, int count)
+        {
+            return new string(character, count);
+        }
     }
 }
