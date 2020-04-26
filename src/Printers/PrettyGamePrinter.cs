@@ -10,7 +10,7 @@ namespace TowerOfHanoi
             int spacing = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
             int maxHeight = game.GetMaxHeight();
 
-            string topLine = new string('-', TowerOfHanoiGame.TowerCount * spacing + 10);
+            string topLine = new string('-', TowerOfHanoiGame.TowerCount * spacing * 4 + 1);
 
             Console.WriteLine(topLine);
             for (int i = maxHeight - 1; i >= 0; i--)
@@ -28,7 +28,7 @@ namespace TowerOfHanoi
                 Console.WriteLine(line + "|");
             }
 
-            string bottomLine = new string('-', TowerOfHanoiGame.TowerCount * spacing + 10);
+            string bottomLine = new string('-', TowerOfHanoiGame.TowerCount * spacing * 4 + 1);
 
             Console.WriteLine(bottomLine);
         }
