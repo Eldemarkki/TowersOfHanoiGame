@@ -6,7 +6,6 @@ namespace TowerOfHanoi
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("Welcome to a the 'Towers of Hanoi' game!");
             Console.WriteLine("The goal is to move the disks from the first tower to any other tower. However, you can not move a big disk on top of a smaller disk, it has to be bigger than the disk below it.");
             Console.WriteLine("You can move a disk by typing 'move <number> <number>'. The first number is the tower where you want to move the disk from, and the second number is the tower where you want to move the disk to.");
@@ -53,15 +52,15 @@ namespace TowerOfHanoi
                         continue;
                     }
 
-                    if (fromIndex < 1 || fromIndex > 3)
+                    if (fromIndex < 1 || fromIndex > TowerOfHanoiGame.TowerCount)
                     {
-                        Console.WriteLine("The first argument must be between 1 and 3!");
+                        Console.WriteLine($"The first argument must be between 1 and {TowerOfHanoiGame.TowerCount}!");
                         continue;
                     }
 
-                    if (toIndex < 1 || toIndex > 3)
+                    if (toIndex < 1 || toIndex > TowerOfHanoiGame.TowerCount)
                     {
-                        Console.WriteLine("The second argument must be between 1 and 3!");
+                        Console.WriteLine($"The second argument must be between 1 and {TowerOfHanoiGame.TowerCount}!");
                         continue;
                     }
 

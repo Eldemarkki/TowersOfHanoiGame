@@ -9,13 +9,11 @@ namespace TowerOfHanoi
         private const int towerCount = 3;
 
         private List<int>[] towers;
-        private int diskCount;
-
         private Stack<(int, int)> moveHistory;
 
         private ITowerOfHanoiPrinter printer;
 
-        public int DiskCount => diskCount;
+        public int DiskCount { get; }
         public static int TowerCount => towerCount;
 
         public TowerOfHanoiGame(int diskCount)
@@ -25,7 +23,7 @@ namespace TowerOfHanoi
             towers = new List<int>[towerCount];
             moveHistory = new Stack<(int, int)>();
 
-            this.diskCount = diskCount;
+            DiskCount = diskCount;
 
             towers[0] = Enumerable.Range(1, diskCount).Reverse().ToList();
             for (int i = 1; i < towerCount; i++)
@@ -78,12 +76,17 @@ namespace TowerOfHanoi
         public bool IsOver()
         {
             // Skip the first tower, and check if any of the other towers length is the disk count.
-            return towers.Skip(1).Any(l => l.Count == diskCount);
+            return towers.Skip(1).Any(l => l.Count == DiskCount);
         }
 
         public List<int> GetTower(int towerIndex)
         {
             return towers[towerIndex];
+        }
+
+        public int GetMaxHeight()
+        {
+            return towers.Max(l => l.Count);
         }
 
         public void Print()
@@ -93,7 +96,7 @@ namespace TowerOfHanoi
 
         public int GetBestPossibleMoveCount()
         {
-            return (int)Math.Pow(2, diskCount) - 1;
+            return (int)Math.Pow(2, DiskCount) - 1;
         }
 
         public int GetMoveCount()

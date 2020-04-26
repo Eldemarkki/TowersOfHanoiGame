@@ -8,12 +8,12 @@ namespace TowerOfHanoi
         public void Print(TowerOfHanoiGame game)
         {
             int spacing = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
-            int maxHeight = Math.Max(Math.Max(game.GetTower(0).Count, game.GetTower(1).Count), Math.Max(game.GetTower(1).Count, game.GetTower(2).Count)); // This works only for 3 towers
+            int maxHeight = game.GetMaxHeight();
 
             string topLine = "";
             topLine += "┌";
 
-            for (int i = 0; i < 3 * spacing + 8; i++)
+            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + 3) - 1; i++)
             {
                 bool isIntersection = (i + 1) % (spacing + 3) == 0;
                 if (isIntersection)
@@ -39,7 +39,7 @@ namespace TowerOfHanoi
                     int value = 0;
                     if (i < tower.Count) value = tower[i];
 
-                    line += "│ " + StringUtilities.ReplaceUntilDifferentCharacter(value.ToString("D" + spacing), '0', ' ') + " ";
+                    line += "│ " + value.ToString().PadLeft(spacing) + " ";
                 }
                 Console.WriteLine(line + "│");
             }
@@ -47,7 +47,7 @@ namespace TowerOfHanoi
             string bottomLine = "";
             bottomLine += "└";
 
-            for (int i = 0; i < 3 * spacing + 8; i++)
+            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + 3) - 1; i++)
             {
                 bool isIntersection = (i + 1) % (spacing + 3) == 0;
                 if (isIntersection)
