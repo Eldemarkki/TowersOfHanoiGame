@@ -13,6 +13,8 @@ namespace TowerOfHanoi.Printers
             int spacing = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
             int maxHeight = game.GetMaxHeight();
 
+            Console.Write(new string('\n', printStyleSettings.VerticalPadding));
+
             for (int i = maxHeight - 1; i >= 0; i--)
             {
                 string line = "";
@@ -28,6 +30,8 @@ namespace TowerOfHanoi.Printers
 
                 Console.WriteLine(line.Trim());
             }
+
+            Console.Write(new string('\n', printStyleSettings.VerticalPadding));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TowerOfHanoi
         public TowerOfHanoiGame(int diskCount)
         {
             printer = new PipeGamePrinter();
-            printStyleSettings = new PrintStyleSettings(1);
+            printStyleSettings = new PrintStyleSettings(1, 0);
 
             towers = new List<int>[towerCount];
             moveHistory = new Stack<(int, int)>();

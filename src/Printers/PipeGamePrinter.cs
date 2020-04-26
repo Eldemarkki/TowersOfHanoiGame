@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TowerOfHanoi.Utilities;
 
 namespace TowerOfHanoi.Printers
 {
@@ -7,31 +8,21 @@ namespace TowerOfHanoi.Printers
     {
         public void Print(TowerOfHanoiGame game, PrintStyleSettings printStyleSettings)
         {
+            int diskWidth = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
+            int maxHeight = game.GetMaxHeight();
+
             int horizontalPadding = printStyleSettings.HorizontalPadding;
             string emptySpace = new string(' ', horizontalPadding);
 
-            int spacing = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
-            int maxHeight = game.GetMaxHeight();
+            int verticalPadding = printStyleSettings.VerticalPadding;
+            string verticalPaddingPart = "║" + new string(' ', diskWidth + 2 * horizontalPadding);
+            string verticalPaddingLine = verticalPaddingPart.Repeat(TowerOfHanoiGame.TowerCount) + "║";
 
-            string topLine = "";
-            topLine += "╔";
-
-            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + horizontalPadding * 2 + 1) - 1; i++)
-            {
-                bool isIntersection = (i + 1) % (spacing + horizontalPadding * 2 + 1) == 0;
-                if (isIntersection)
-                {
-                    topLine += "╦";
-                }
-                else
-                {
-                    topLine += "═";
-                }
-            }
-
-            topLine += "╗";
+            string topLine = "╔" + ("═".Repeat(diskWidth + horizontalPadding * 2) + "╦").Repeat(TowerOfHanoiGame.TowerCount-1) + "═".Repeat(diskWidth + horizontalPadding * 2) + "╗";
 
             Console.WriteLine(topLine);
+            Console.Write((verticalPaddingLine + '\n').Repeat(verticalPadding));
+
             for (int i = maxHeight - 1; i >= 0; i--)
             {
                 string line = "";
@@ -39,32 +30,20 @@ namespace TowerOfHanoi.Printers
                 {
                     List<int> tower = game.GetTower(j);
 
-                    int value = 0;
-                    if (i < tower.Count) value = tower[i];
+                    string disk = new string(' ', diskWidth);
+                    if (i < tower.Count)
+                    {
+                        disk = tower[i].ToString().PadLeft(diskWidth);
+                    }
 
-                    line += "║" + emptySpace + value.ToString().PadLeft(spacing) + emptySpace;
+                    line += "║" + emptySpace + disk + emptySpace;
                 }
                 Console.WriteLine(line + "║");
             }
 
-            string bottomLine = "";
-            bottomLine += "╚";
+            Console.Write((verticalPaddingLine + '\n').Repeat(verticalPadding));
 
-            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + horizontalPadding * 2 + 1) - 1; i++)
-            {
-                bool isIntersection = (i + 1) % (spacing + horizontalPadding * 2 + 1) == 0;
-                if (isIntersection)
-                {
-                    bottomLine += "╩";
-                }
-                else
-                {
-                    bottomLine += "═";
-                }
-            }
-
-            bottomLine += "╝";
-
+            string bottomLine = "╚" + ("═".Repeat(diskWidth + horizontalPadding * 2) + "╩").Repeat(TowerOfHanoiGame.TowerCount - 1) + "═".Repeat(diskWidth + horizontalPadding * 2) + "╝";
             Console.WriteLine(bottomLine);
         }
     }
