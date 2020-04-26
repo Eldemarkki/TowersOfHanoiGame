@@ -1,7 +1,7 @@
-﻿namespace TowerOfHanoi
+﻿namespace TowerOfHanoi.Printers
 {
     public interface ITowerOfHanoiPrinter
     {
-        void Print(TowerOfHanoiGame game);
+        void Print(TowerOfHanoiGame game, PrintStyleSettings printStyleSettings);
     }
 }

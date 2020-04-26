@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace TowerOfHanoi
+namespace TowerOfHanoi.Printers
 {
     class PipeGamePrinter : ITowerOfHanoiPrinter
     {
-        public void Print(TowerOfHanoiGame game)
+        public void Print(TowerOfHanoiGame game, PrintStyleSettings printStyleSettings)
         {
+            int horizontalPadding = printStyleSettings.HorizontalPadding;
+            string emptySpace = new string(' ', horizontalPadding);
+
             int spacing = game.DiskCount > 0 ? game.DiskCount.ToString().Length : 0;
             int maxHeight = game.GetMaxHeight();
 
             string topLine = "";
             topLine += "╔";
 
-            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + 3) - 1; i++)
+            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + horizontalPadding * 2 + 1) - 1; i++)
             {
-                bool isIntersection = (i + 1) % (spacing + 3) == 0;
+                bool isIntersection = (i + 1) % (spacing + horizontalPadding * 2 + 1) == 0;
                 if (isIntersection)
                 {
                     topLine += "╦";
@@ -40,7 +42,7 @@ namespace TowerOfHanoi
                     int value = 0;
                     if (i < tower.Count) value = tower[i];
 
-                    line += "║ " + value.ToString().PadLeft(spacing) + " ";
+                    line += "║" + emptySpace + value.ToString().PadLeft(spacing) + emptySpace;
                 }
                 Console.WriteLine(line + "║");
             }
@@ -48,9 +50,9 @@ namespace TowerOfHanoi
             string bottomLine = "";
             bottomLine += "╚";
 
-            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + 3) - 1; i++)
+            for (int i = 0; i < TowerOfHanoiGame.TowerCount * (spacing + horizontalPadding * 2 + 1) - 1; i++)
             {
-                bool isIntersection = (i + 1) % (spacing + 3) == 0;
+                bool isIntersection = (i + 1) % (spacing + horizontalPadding * 2 + 1) == 0;
                 if (isIntersection)
                 {
                     bottomLine += "╩";

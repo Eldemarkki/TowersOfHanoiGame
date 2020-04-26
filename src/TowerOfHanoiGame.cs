@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TowerOfHanoi.Printers;
 
 namespace TowerOfHanoi
 {
@@ -12,6 +13,7 @@ namespace TowerOfHanoi
         private Stack<(int, int)> moveHistory;
 
         private ITowerOfHanoiPrinter printer;
+        private PrintStyleSettings printStyleSettings;
 
         public int DiskCount { get; }
         public static int TowerCount => towerCount;
@@ -19,6 +21,7 @@ namespace TowerOfHanoi
         public TowerOfHanoiGame(int diskCount)
         {
             printer = new PipeGamePrinter();
+            printStyleSettings = new PrintStyleSettings(1);
 
             towers = new List<int>[towerCount];
             moveHistory = new Stack<(int, int)>();
@@ -91,7 +94,7 @@ namespace TowerOfHanoi
 
         public void Print()
         {
-            printer.Print(this);            
+            printer.Print(this, printStyleSettings);            
         }
 
         public int GetBestPossibleMoveCount()
